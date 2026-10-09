@@ -1,9 +1,0 @@
-&colvar
-  cv_type = 'COM_DISTANCE'
-  cv_ni = 11,  ! 4 + delimiter 0 + 6 integer entries
-  cv_i = 3592,3591,3590,3593, 0, 3660,3654,3649,3664,3665,3644,
-  npath = 2, path=6.0,10.0
-  path_mode = 'LINES'
-  harm = 10.0, nharm = 1
-  cv_min=2.0, cv_max=40.0
- /
