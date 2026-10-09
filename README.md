@@ -1,6 +1,6 @@
 # 分子动力学模拟笔记
 
-AMBER / GROMACS 的模拟输入、分析示例与方法说明。网页入口为 `index.html`。
+AMBER / GROMACS 的模拟输入、分析示例与方法说明。网页入口为 https://ruiqiu0111-dot.github.io/amber-md-notes/ 。
 
 ## 验证状态
 
@@ -11,7 +11,7 @@ AMBER / GROMACS 的模拟输入、分析示例与方法说明。网页入口为 
 ## 阅读与预览
 
 从项目根目录执行 `python -m http.server 8000`，访问 http://localhost:8000 。
-网页使用远程 MathJax，需要联网才能显示公式。`WY` 保留为与根目录同步的网页副本；修改以根目录为准。
+网页使用远程 MathJax，需要联网才能显示公式。
 
 ## 软件与依赖
 
