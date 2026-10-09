@@ -1,0 +1,54 @@
+============================================================
+SeNMT + SAM + N×T3Q 多配体体系构建
+============================================================
+
+[1/5] 读取蛋白: E:\Desktop\website\review_patches\ligand_setup_smoke\synthetic_protein.pdb
+[2/5] 读取 SAM (辅因子): E:\Desktop\website\review_patches\ligand_setup_smoke\synthetic_SAM.mol2
+[3/5] 读取 T3Q (被研究配体): E:\Desktop\website\review_patches\ligand_setup_smoke\synthetic_T3Q.mol2
+
+体系信息:
+  蛋白原子数:     8
+  SAM 原子数:     2
+  T3Q 原子数:     2
+  蛋白中心:       [0.00, 0.00, 0.00]
+  蛋白半径:       34.64 Å
+  溶剂盒子大小:   93.28 Å (buffer=12.0 Å)
+  口袋中心:       [0.00, 0.00, 0.00]
+  口袋排除半径:   18.0 Å
+  T3Q 数量:       2
+
+[4/5] 随机放置 2 个 T3Q...
+  T3Q  1 (单体检查 PDB 使用残基号 1): 到口袋  48.7 Å | 到 SAM  48.6 Å | 位置 [ -11.70,   42.04,   21.64]
+  T3Q  2 (单体检查 PDB 使用残基号 1): 到口袋  46.3 Å | 到 SAM  46.0 Å | 位置 [   9.20,  -32.09,  -32.09]
+
+[5/5] 生成 tleap 输入文件...
+  生成: tleap_multi_T3Q.in
+  生成: ligamd_multi_T3Q.in
+  模板检查通过：&cntrl 与必填占位符齐全；填入并核对最终 prmtop 编号前不要运行。
+  生成: check_distances.cpptraj
+
+============================================================
+完成！下一步操作:
+============================================================
+
+1. 检查 SAM 坐标是否已对齐到蛋白:
+   vmd E:\Desktop\website\review_patches\ligand_setup_smoke\synthetic_protein.pdb E:\Desktop\website\review_patches\ligand_setup_smoke\synthetic_SAM.mol2
+   # 确认 SAM 在口袋中，没有明显冲突
+
+2. 运行 tleap 构建拓扑:
+   tleap -f tleap_multi_T3Q.in
+
+3. 检查初始结构:
+   vmd SeNMT_SAM_multiT3Q.pdb
+   # 确认所有 T3Q 分散在溶剂中，没有重叠
+
+4. 能量最小化 + 升温 + 平衡 (标准流程)
+   tleap 输出后先检查最终 parm7/PDB，并填写 ligamd_multi_T3Q.in 中所有 __FILL_...__ 占位符。
+   atom_p/atom_l 不是原子总数；须按最终拓扑的原子顺序及所选锚点确认。
+
+5. LiGaMD 生产模拟:
+   pmemd.cuda -O -i ligamd_multi_T3Q.in -o ligamd.mdout \
+         -p SeNMT_SAM_multiT3Q.parm7 -c equil.rst7 \
+         -r ligamd.rst7 -x ligamd.nc
+
+============================================================

@@ -1,0 +1,8 @@
+parm SeNMT_SAM_multiT3Q.parm7
+trajin SeNMT_SAM_multiT3Q.rst7
+
+# 仅为待填检查模板：先从最终 parm7/PDB 确认 residue mask 和实际原子名。
+# 不要使用生成脚本臆测的 residue/atom 编号。
+# distance T3Q1_to_pocket :<T3Q_RESIDUE>@<T3Q_ATOM> :<PROTEIN_RESIDUE>@<PROTEIN_ATOM> out check_dist.dat
+# distance T3Q1_T3Q2 :<T3Q1_RESIDUE>@<T3Q_ATOM> :<T3Q2_RESIDUE>@<T3Q_ATOM> out check_liglig.dat
+# 填好并取消注释所需命令后再添加 run。

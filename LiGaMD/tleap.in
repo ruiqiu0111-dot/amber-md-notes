@@ -1,0 +1,7 @@
+# Compatibility entry point: use the parameterized-MOL2 copy/translate builder.
+# From the project root, first run with real, aligned inputs and pocket coordinates:
+# python LiGaMD/setup_multi_T3Q.py protein.pdb SAM.mol2 T3Q.mol2 x,y,z N
+# Inspect the resulting tleap_multi_T3Q.in before invoking this wrapper.
+# N is the count of initially free T3Q in that workflow, not SAM + T3Q.
+# Do not combine the N-free-ligand output with nlig=6 unless six T3Q are present.
+source tleap_multi_T3Q.in

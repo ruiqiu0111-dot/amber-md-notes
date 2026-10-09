@@ -1,0 +1,42 @@
+LiGaMD_Dual (igamd=11) multi-T3Q input template; fill and verify markers before use.
+&cntrl
+  ! LiGaMD_Dual boosts ligand nonbonded and remaining-system potential energies.
+  ! Verify the T3Q residue mask and atom indices against the final parm7/PDB.
+  ! nlig is the T3Q molecule count; ibblig=1 enables selective bound-ligand boosting.
+  ! atom_p is a protein atom serial, not the protein atom count.
+  ! atom_l is a 1-based atom serial within one T3Q, not its atom count.
+  ! dblig=3.7 A is an example contact cutoff; check it for the selected anchors.
+  ! Replace every __FILL_...__ marker before running this input.
+  ! LiGaMD accelerates sampling; this template does not directly yield physical kon/koff.
+  ! Kinetics require independent replicas, convergence assessment, and validated kinetic reweighting.
+  ! GaMD manual: https://www.med.unc.edu/pharm/miaolab/wp-content/uploads/sites/1385/2023/09/GaMD_Amber-manual.pdf
+  imin=0, irest=1, ntx=5,          ! 从带速度的平衡 restart 继续
+  nstlim=128000000, dt=0.002,
+  ntt=3, temp0=300.0, gamma_ln=2.0,
+  ntb=2, ntp=1, taup=2.0,
+  pres0=1.0,
+  ntc=2, ntf=1,                    ! LiGaMD soft-core/TI 示例设置；ntf=1 本身不启用软核
+  cut=10.0,
+  igamd=11, irest_gamd=0,
+  ntcmd=700000, ntcmdprep=280000,
+  nteb=27300000, ntebprep=280000, ntave=140000,
+  sigma0P=4.0, sigma0D=6.0, iEP=2, iED=1,
+  icfe=1, ifsc=1,
+  gti_cpu_output=0, gti_add_sc=1,
+  timask1=':__FILL_T3Q_RESIDUE_MASK_FROM_FINAL_PRMTOP__',
+  scmask1=':__FILL_T3Q_RESIDUE_MASK_FROM_FINAL_PRMTOP__',
+  timask2='', scmask2='',
+  ioutfm=1,
+  ntwr=50000, ntwx=50000, ntpr=5000,
+  ntxo=2,                         ! restart 文件使用 NetCDF
+  ! --- 多配体参数 ---
+  ibblig=1,                        ! 启用动态配体检测
+  nlig=2,                ! T3Q 总数
+  atom_p=__FILL_PROTEIN_ATOM_SERIAL_FROM_FINAL_PRMTOP__,
+  atom_l=__FILL_T3Q_INTERNAL_ATOM_SERIAL_1_BASED__,
+  dblig=3.7,                       ! 结合判定距离 (Å)
+  ! nstlim = ntcmd + nteb + 100000000 production steps (200.0 ns).
+  ! LiGaMD manual example values below are starting points, not convergence criteria.
+  ! ntave should be reviewed after inspecting final total atom count; manual suggests ~4 x natom.
+  ! Ensure ntcmd and nteb satisfy the ntave requirements in the manual.
+/
